@@ -41,4 +41,4 @@ iface = gr.Interface(
     description="Generate images with the DemoFusion SDXL Pipeline."
 )
 
-iface.launch(server_name='114.113.235.51', server_port=8890)
+iface.launch()
