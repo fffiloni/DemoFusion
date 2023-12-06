@@ -7,7 +7,7 @@ def generate_images(prompt, negative_prompt, height, width, num_inference_steps,
     pipe = DemoFusionSDXLPipeline.from_pretrained(model_ckpt, torch_dtype=torch.float16)
     pipe = pipe.to("cuda")
 
-    generator = torch.Generator(device='cuda')
+    generator = torch.Generator(device="cuda")
     generator = generator.manual_seed(int(seed))
 
     images = pipe(prompt, negative_prompt=negative_prompt, generator=generator,
@@ -38,7 +38,7 @@ iface = gr.Interface(
     ],
     outputs=gr.Gallery(label="Generated Images"),
     title="DemoFusion Gradio Demo",
-    description="Generate images with the DemoFusion SDXL Pipeline."
+    description="Generate images with the DemoFusion SDXL Pipeline. Runs on A100 GPU."
 )
 
 iface.launch()
