@@ -2,7 +2,14 @@ import gradio as gr
 from pipeline_demofusion_sdxl import DemoFusionSDXLPipeline
 import torch
 
+import subprocess
+from subprocess import getoutput
+gpu_info = getoutput('nvidia-smi')
+
 def generate_images(prompt, negative_prompt, height, width, num_inference_steps, guidance_scale, cosine_scale_1, cosine_scale_2, cosine_scale_3, sigma, view_batch_size, stride, seed):
+   if not("A100" in gpu_info):
+        raise gr.Error("This demo will only run on A100 GPU upgrade.")
+   
     model_ckpt = "stabilityai/stable-diffusion-xl-base-1.0"
     pipe = DemoFusionSDXLPipeline.from_pretrained(model_ckpt, torch_dtype=torch.float16)
     pipe = pipe.to("cuda")
